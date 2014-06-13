@@ -164,26 +164,35 @@ class EucaREPL(Cmd):
                             (____/|_|
 """
 
-    def do_greet(self, line):
-        print "hello"
-
     def do_EOF(self, line):
         'Exit for the tutorial by pressing Ctrl+d'
         print ''
         return True
 
     def do_help(self, arg):
-        print "Welcome to Eucalyptus Faststart tutorial"
-        print "In these tutorials you will learn how to use your"
-        print "newly installed Eucalyptus cloud."
-
         if len(arg) == 0:
-            return cmd2.Cmd.do_help(self, '')
+            print "Welcome to Eucalyptus Faststart tutorial"
+            print "In these tutorials you will learn how to use your"
+            print "newly installed Eucalyptus cloud."
+            return self.commands('')
         return cmd2.Cmd.do_help(self, arg    )
 
-    def do_tutorial_installimage(self, arg):
-        'Installs default image for the tutorial.'
+    def do_installimage(self, arg):
+        '''Installs default image for the tutorial.
+        It downloads the image using curl and then goes through the required steps to install it.'''
         install_image(self)
+
+    def commands(self, line):
+        """
+        Show all available commands
+        """
+        names = [name[3:] for name in list(set(dir(self)) - set(dir(Cmd))) if name.startswith('do_')]
+        names.append('help')
+        names.sort()
+        print self.colorize('Available commands: \n', 'blue')
+        for name in names:
+            print self.colorize(name, 'green')
+        print ''
 
     def default(self, line):
         print "No such command, please check the help menu."
