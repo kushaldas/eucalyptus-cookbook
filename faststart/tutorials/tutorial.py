@@ -75,7 +75,7 @@ def install_image(self):
 
     raw_input()
 
-    print color.BOLD + "xz -d fedora.raw.xz" + color.END
+    print "+ " + color.BOLD + "xz -d fedora.raw.xz" + color.END
     os.system("xz -d fedora.raw.xz")
 
 
@@ -109,7 +109,7 @@ def install_image(self):
     print "easily make images available to other cloud users. Let's make"
     print "your new image available to all users of this cloud."
     print ""
-    self.do_pause("Hit Enter to modify the image attribute.")
+
 
     out, err = system('euca-describe-images')
     lines = out.split('\n')
@@ -122,6 +122,8 @@ def install_image(self):
         return
     command = "euca-modify-image-attribute -l -a all %s" % emid
     print "+ " + pbold(command)
+
+    self.do_pause("Hit Enter to modify the image attribute.")
     os.system(command)
 
     print "\nYour new Fedora machine image is installed and available to all"
