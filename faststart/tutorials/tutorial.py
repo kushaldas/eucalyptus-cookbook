@@ -1,5 +1,6 @@
 import os
 from installimage import install_image
+from describeimages import describe_images
 
 try:
     from cmd2 import Cmd
@@ -58,5 +59,9 @@ class EucaREPL(Cmd):
     def default(self, line):
         print "No such command, please check the help menu."
 
+    def do_describeimages(self, line):
+        describe_images(self)
+
 if __name__ == '__main__':
     EucaREPL().cmdloop()
+
