@@ -1,7 +1,7 @@
 import os
 from installimage import install_image
 from describeimages import describe_images
-
+from launchinstances import launchinstances
 try:
     from cmd2 import Cmd
     import cmd2
@@ -61,6 +61,10 @@ class EucaREPL(Cmd):
 
     def do_describeimages(self, line):
         describe_images(self)
+
+    def do_lauchinstances(self, line):
+        launchinstances(self)
+
 
 if __name__ == '__main__':
     EucaREPL().cmdloop()
