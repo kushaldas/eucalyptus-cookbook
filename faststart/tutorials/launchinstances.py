@@ -1,25 +1,18 @@
 import os
 import sys
 import time
-from utils import color, system, pbold
+from utils import color, system, pbold, find_tutorial_image
 
 
 def launchinstances(self):
+    words = None
     print "\nIn this tutorial you will learn how to start a new instace from the"
     print " image we installed in the last tutorial."
     self.do_pause("Press Enter to continue.")
-    out, err = system('euca-describe-images')
-    lines = out.split('\n')
-    for line in lines:
-        if line.find('tutorial/fedora.raw.manifest.xml') != -1:
-            words = line.split('\t')
 
+    words =  find_tutorial_image()
     if not words:
-        print "Unable to find the Fedora machine image. Use this command to install it:"
-        print "  installimage\n"
-        print "Exiting..."
         return
-
     else:
         imageid = words[1]
         print "The following command will start an instance with EMI %s" % imageid

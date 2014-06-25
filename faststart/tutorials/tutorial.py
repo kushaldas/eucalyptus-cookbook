@@ -1,7 +1,10 @@
 import os
+from utils import pbold
 from installimage import install_image
 from describeimages import describe_images
 from launchinstances import launchinstances
+
+
 try:
     from cmd2 import Cmd
     import cmd2
@@ -25,6 +28,7 @@ class EucaREPL(Cmd):
 |_______)____/ \____)_____|\_)__  |  __/  \__)____/(___/
                             (____/|_|
 """
+        print pbold('help') + " command will give you details about other available commands.\n"
 
     def do_EOF(self, line):
         'Exit for the tutorial by pressing Ctrl+d'
@@ -60,10 +64,13 @@ class EucaREPL(Cmd):
         print "No such command, please check the help menu."
 
     def do_describeimages(self, line):
+        "This tutorial teaches how to learn about various installed images in your cloud."
         describe_images(self)
 
     def do_lauchinstances(self, line):
+        "This tutorial will help you to start your first instance"
         launchinstances(self)
+
 
 
 if __name__ == '__main__':

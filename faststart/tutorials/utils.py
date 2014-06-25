@@ -32,3 +32,23 @@ def system(cmd):
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
     out, err = ret.communicate()
     return out, err
+
+def find_tutorial_image():
+    """Finds the tutorial image.
+
+    :returns: List or None
+    """
+    words = None
+    out, err = system('euca-describe-images')
+    lines = out.split('\n')
+    for line in lines:
+        if line.find('tutorial/fedora.raw.manifest.xml') != -1:
+            words = line.split('\t')
+
+    if not words:
+        print "Unable to find the Fedora machine image. Use this command to install it:"
+        print "  installimage\n"
+        print "Exiting..."
+        return None
+
+    return words
