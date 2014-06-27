@@ -72,6 +72,7 @@ class EucaREPL(Cmd):
         launchinstances(self)
 
     def do_attachvolume(self, line):
+        "This tutorial will help you to create and attach an EBS volume to a running instance."
         attachvolume(self)
 
 if __name__ == '__main__':
