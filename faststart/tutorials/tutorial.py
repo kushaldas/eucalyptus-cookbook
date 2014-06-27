@@ -3,7 +3,7 @@ from utils import pbold
 from installimage import install_image
 from describeimages import describe_images
 from launchinstances import launchinstances
-
+from volumes import attachvolume
 
 try:
     from cmd2 import Cmd
@@ -71,7 +71,8 @@ class EucaREPL(Cmd):
         "This tutorial will help you to start your first instance"
         launchinstances(self)
 
-
+    def do_attachvolume(self, line):
+        attachvolume(self)
 
 if __name__ == '__main__':
     EucaREPL().cmdloop()
