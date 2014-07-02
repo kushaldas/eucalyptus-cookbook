@@ -4,6 +4,7 @@ from installimage import install_image
 from describeimages import describe_images
 from launchinstances import launchinstances
 from volumes import attachvolume
+from cloudinit import cloudinit
 
 try:
     from cmd2 import Cmd
@@ -74,6 +75,11 @@ class EucaREPL(Cmd):
     def do_attachvolume(self, line):
         "This tutorial will help you to create and attach an EBS volume to a running instance."
         attachvolume(self)
+
+    def do_cloudinit(self, line):
+        "This tutorial will help you to learn basics of cloud-init."
+        cloudinit(self)
+
 
 if __name__ == '__main__':
     EucaREPL().cmdloop()

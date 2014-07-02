@@ -62,7 +62,7 @@ def attachvolume(self):
                         break
 
                 if status != 'available':
-                    print "There is some issues in creating the volume"
+                    print "There are some issues in creating the volume"
                     return
                 print "\nYour volume is created properly.\n"
                 cmd = 'euca-attach-volume %s -i %s -d /dev/sdf' % (volid, iid)
@@ -77,7 +77,7 @@ def attachvolume(self):
 
                 print out
                 print "\nThe volume will be attached to the running instance. Login to the"
-                print "instane, become root and then you can access the volume as /dev/vdb"
+                print "instance, become root and then you can access the volume as /dev/vdb"
 
                 print "# mkfs.ext4 -p /dev/vdb"
                 print "# mount /dev/vdb /mnt\n"
