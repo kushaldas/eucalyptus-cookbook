@@ -1,5 +1,5 @@
 import os
-from utils import pbold
+from utils import pbold, find_tutorial_image, system
 from installimage import install_image
 from describeimages import describe_images, terminate_instances
 from launchinstances import launchinstances
@@ -16,11 +16,28 @@ except:
     from cmd2 import Cmd
 
 
+def startup_work(self):
+    'We will try to gather some information about the cloud here.'
+    if find_tutorial_image():
+        print pbold("You already have the tutorial image installed.\n")
+
+    #Now find out if any instances are running.
+    ri = []
+    out, err = system("euca-describe-instances")
+    for line in out.split('\n'):
+        if line.startswith('INSTANCE'):
+            words = line.split('\t')
+            if words[5] == 'running':
+                ri.append(words)
+    print "You have %s instance(s) already %s in your cloud.\n" % (pbold(str(len(ri))), pbold('running'))
+
+
 class EucaREPL(Cmd):
     """Simple command processor example."""
     prompt = 'euca-tutorial$ '
 
     def preloop(self):
+
         print """ _______                   _
 (_______)                 | |             _
  _____   _   _  ____ _____| |_   _ ____ _| |_ _   _  ___
@@ -29,6 +46,8 @@ class EucaREPL(Cmd):
 |_______)____/ \____)_____|\_)__  |  __/  \__)____/(___/
                             (____/|_|
 """
+        print ""
+        startup_work(self)
         print pbold('help') + " command will give you details about other available commands.\n"
 
     def do_EOF(self, line):
