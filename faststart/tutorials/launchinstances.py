@@ -54,7 +54,7 @@ def launchinstances(self):
         if status == 'running':
             print "Use this command to log into your new instance\n."
             print " ssh -i ~/my-first-keypair.pem fedora@%s\n" % instanceip
-            print "Next you should learn how to get the description of your instances using describeinstance tutorial command.\n"
+            print "Next you should learn how to get the description of your instances and terminate them using terminate tutorial command.\n"
 
         else:
             print "There is some error in creating instance."
