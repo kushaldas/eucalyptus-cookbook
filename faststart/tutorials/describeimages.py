@@ -13,7 +13,7 @@ def describe_images(self):
     print "In this tutorial, we're going to show you how to list"
     print "the images available to your Eucalyptus users."
     print ""
-    print "Hit Enter to continue."
+    self.do_pause("Hit Enter to continue.")
 
     print "Remember: when using Eucalyptus, you must \"log in\"."
     print "When using euca2ools, the way to \"log in\" is to source"
@@ -59,3 +59,72 @@ def describe_images(self):
 
         print "To learn more about the euca-describe-images command, check out the documentaion:"
         print "  https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html#euca2ools-guide/euca-describe-images.html"
+
+
+def terminate_instances(self):
+    'Tutorial for instance termination.'
+    words = None
+    data = None
+    running_instances = []
+    print ""
+    print "In this tutorial, we're going to show you how to terminate"
+    print "a running instance."
+    print ""
+    self.do_pause("Hit Enter to continue.")
+    print "But before that we should learn how to find out more about the instances."
+    print "The following command will give the us the information required."
+    print pbold("\n+ euca-describe-instances\n")
+    out, err = system("euca-describe-instances")
+    print out
+
+    self.do_pause('Press Enter to continue.')
+    print "Let us learn a bit more about the output.\n"
+
+    for line in out.split('\n'):
+        if line.startswith('INSTANCE'):
+            words = line.split('\t')
+            if words[5] == 'running':
+                running_instances.append(words)
+
+    instances = {}
+    for words in running_instances:
+        instanceid = words[1]
+        imageid = words[2]
+        publicip = words[3]
+        privateip = words[4]
+        status = words[5]
+        keypair = words[6]
+        itype = words[9]
+
+        print pbold(instanceid) + ' is running with public IP as ' + pbold(publicip) + ' and private IP as ' + pbold(privateip) \
+            + " with a keypair called " + pbold(keypair) + ' and the instance type is ' + pbold(itype) + '.'
+        instances[instanceid] = True
+    print ""
+    print "Now we can use " + pbold('euca-terminate-instances') + ' command to terminate any given instances.'
+
+
+    while True:
+        data = raw_input('Type in the instance id you want to terminate. Leave it blank to exit: ')
+        data = data.strip()
+        if not data:
+            return
+        if data not in instances:
+            print "You have a typo in the instance id. Please try again."
+            continue
+        break
+
+    print ""
+    print "The following command will be used to terminate %s.\n" % data
+    print pbold('+ euca-terminate-instances %s\n' % data)
+
+    os.system('euca-terminate-instances %s' % data)
+
+    self.do_pause('Press Enter to continue.')
+
+    print '\nNow after some time use the euca-describe-instacnes command to see the instacne in terminated state.\n'
+    print "To learn more about the euca-terminate-instances command, check out the documentaion:"
+    print "  https://www.eucalyptus.com/docs/eucalyptus/3.4/index.html#euca2ools-guide/euca-terminate-instances.html\n"
+
+
+
+

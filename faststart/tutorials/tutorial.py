@@ -1,7 +1,7 @@
 import os
 from utils import pbold
 from installimage import install_image
-from describeimages import describe_images
+from describeimages import describe_images, terminate_instances
 from launchinstances import launchinstances
 from volumes import attachvolume
 from cloudinit import cloudinit
@@ -80,6 +80,9 @@ class EucaREPL(Cmd):
         "This tutorial will help you to learn basics of cloud-init."
         cloudinit(self)
 
+    def do_terminate(self, line):
+        'This tutorial will help you to learn how to terminate an instance.'
+        terminate_instances(self)
 
 if __name__ == '__main__':
     EucaREPL().cmdloop()
